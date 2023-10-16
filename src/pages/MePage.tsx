@@ -21,6 +21,18 @@ export default () => {
   const toast = useToast();
   const { data, isLoading, error } = useUser();
   const options = data?.options;
+  const age = data?.age;
+  let checkSameAge = false;
+
+  if (options) {
+    if (
+      options.oldAge.checked ||
+      options.youngAge.checked ||
+      options.midAge.checked
+    )
+      checkSameAge = true;
+  }
+
   if ((!isLoading && !options) || error)
     return <ErrorBlock>Something went wrong...</ErrorBlock>;
 
@@ -31,6 +43,17 @@ export default () => {
     for (const key in options) {
       if (options.hasOwnProperty(key)) {
         options[key].checked = values[key];
+        if (key == "midAge" || key == "youngAge" || key == "oldAge")
+          options[key].checked = false;
+      }
+    }
+    if (values["sameAge"] == true && age && options) {
+      if (age < 24) {
+        options.youngAge.checked = true;
+      } else if (age >= 24 && age < 45) {
+        options.midAge.checked = true;
+      } else {
+        options.oldAge.checked = true;
       }
     }
     const apiClient = new ApiClient<User>("/users/me");
@@ -64,22 +87,43 @@ export default () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
               {Object.entries(options as { [key: string]: Option }).map(
-                ([slug, option]) => (
-                  <FormControl key={slug}>
-                    <HStack justifyContent="space-between">
-                      <FormLabel m={0} htmlFor={slug}>
-                        {option.description}
-                      </FormLabel>
-                      <Switch
-                        {...register(slug)}
-                        id={slug}
-                        colorScheme="red"
-                        checked={option.checked}
-                      />
-                    </HStack>
-                  </FormControl>
-                )
+                ([slug, option]) => {
+                  if (
+                    slug == "youngAge" ||
+                    slug == "oldAge" ||
+                    slug == "midAge"
+                  )
+                    return <></>;
+                  return (
+                    <FormControl key={slug}>
+                      <HStack justifyContent="space-between">
+                        <FormLabel m={0} htmlFor={slug}>
+                          {option.description}
+                        </FormLabel>
+                        <Switch
+                          {...register(slug)}
+                          id={slug}
+                          colorScheme="red"
+                          defaultChecked={option.checked}
+                        />
+                      </HStack>
+                    </FormControl>
+                  );
+                }
               )}
+              <FormControl key={"sameAge"}>
+                <HStack justifyContent="space-between">
+                  <FormLabel m={0} htmlFor={"sameAge"}>
+                    Предпочту попутчиков своего возраста
+                  </FormLabel>
+                  <Switch
+                    {...register("sameAge")}
+                    id={"sameAge"}
+                    colorScheme="red"
+                    defaultChecked={checkSameAge}
+                  />
+                </HStack>
+              </FormControl>
               <Button colorScheme="red" type="submit" mt={4} borderRadius={0}>
                 Сохранить
               </Button>
