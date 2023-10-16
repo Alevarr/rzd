@@ -1,8 +1,16 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, Spinner, Stack } from "@chakra-ui/react";
 // import "./seatsPage.css";
 import "./seatsPage.css";
+import { useParams } from "react-router-dom";
+import useTrainRoute from "../hooks/useTrainRoute";
+import ErrorBlock from "../components/ErrorBlock";
 
 export default () => {
+  const { id } = useParams();
+  const { data, error, isLoading } = useTrainRoute(id as string);
+  if (isLoading) return <Spinner m={8} />;
+  if (error) return <ErrorBlock>{error.message}</ErrorBlock>;
+  if (!data) return <ErrorBlock>404 Page not found</ErrorBlock>;
   return (
     <Stack bg="white">
       <Box>
