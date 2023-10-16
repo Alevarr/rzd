@@ -15,9 +15,17 @@ import { MdOutlineArrowRightAlt } from "react-icons/md";
 import { RiArrowRightSLine } from "react-icons/ri";
 import FeatureBadge from "./FeatureBadge";
 import { useNavigate } from "react-router-dom";
+import TrainRoute from "../entities/TrainRoute";
 
-export default () => {
+interface Props {
+  route: TrainRoute;
+}
+
+export default ({ route }: Props) => {
   const navigate = useNavigate();
+  const departureDate = new Date(route.departureDate * 1000);
+  const arrivalDate = new Date(route.arrivalDate * 1000);
+  console.log(departureDate);
   return (
     <Card
       width="100%"
@@ -27,13 +35,12 @@ export default () => {
         transition: "transform .15s ease-in",
         cursor: "pointer",
       }}
-      onClick={() => navigate("/1")}
+      onClick={() => navigate(`/${route._id}`)}
     >
       <CardBody>
         <VStack alignItems="stretch">
           <HStack justifyContent="flex-start">
             <FeatureBadge>Фирменный</FeatureBadge>
-            <FeatureBadge>Еще какой-то</FeatureBadge>
           </HStack>
           <HStack>
             <Icon color="red.500">
@@ -45,13 +52,15 @@ export default () => {
               />
             </Icon>
             <HStack spacing={0} fontSize="12px">
-              <Text as="span">002Й «Премиум»</Text>
+              <Text as="span" fontWeight="bold">
+                {route.trainName}
+              </Text>
               <BsDot color="red" />
               <Text as="span">ФПК</Text>
               <BsDot color="red" />
-              <Text as="span">Москва Казанская</Text>
+              <Text as="span">{route.departureStation}</Text>
               <MdOutlineArrowRightAlt />
-              <Text as="span">Казань Пасс</Text>
+              <Text as="span">{route.arrivalStation}</Text>
             </HStack>
             <Link href="#" color="red" fontSize="12px">
               Маршрут
@@ -67,16 +76,17 @@ export default () => {
               <HStack justifyContent="space-between">
                 <VStack justifyContent="flex-start">
                   <Text as="span" fontSize="36px">
-                    7:00
+                    {departureDate.getDate() +
+                      "." +
+                      departureDate.getMonth() +
+                      " " +
+                      departureDate.getHours() +
+                      ":0" +
+                      departureDate.getMinutes()}
                   </Text>
-                  <Stack spacing={0}>
-                    <Text as="span" fontSize="12px">
-                      Казанский вокзал
-                    </Text>
-                    <Text as="span" fontSize="12px" fontWeight="bold">
-                      Москва Казанская
-                    </Text>
-                  </Stack>
+                  <Text as="span" fontSize="12px" fontWeight="bold">
+                    {route.departureStation}
+                  </Text>
                 </VStack>
                 <VStack>
                   <HStack spacing={0}>
@@ -93,12 +103,18 @@ export default () => {
                 </VStack>
                 <VStack justifyContent="flex-start">
                   <Text as="span" fontSize="36px">
-                    18:20
+                    {arrivalDate.getDate() +
+                      "." +
+                      arrivalDate.getMonth() +
+                      " " +
+                      arrivalDate.getHours() +
+                      ":" +
+                      arrivalDate.getMinutes()}
                   </Text>
                   <Stack spacing={0}>
                     <Text as="span" fontSize="12px"></Text>
                     <Text as="span" fontSize="12px" fontWeight="bold">
-                      Казань Пасс
+                      {route.arrivalStation}
                     </Text>
                   </Stack>
                 </VStack>
@@ -181,17 +197,6 @@ export default () => {
                 </Text>
                 <Text as="span" width="100px" textAlign="end" color="red">
                   от 9902 ₽
-                </Text>
-              </HStack>
-              <HStack fontSize="14px">
-                <Text as="span" flexGrow={1}>
-                  Люкс
-                </Text>
-                <Text as="span" width="50px" textAlign="end" color="gray">
-                  8
-                </Text>
-                <Text as="span" width="100px" textAlign="end" color="red">
-                  от 31978 ₽
                 </Text>
               </HStack>
               <HStack fontSize="14px">

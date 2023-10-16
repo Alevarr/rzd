@@ -2,8 +2,6 @@ import axios, { AxiosRequestConfig } from "axios";
 import Cookies from 'universal-cookie'
 
 export interface FetchResponse<T> {
-    count: number;
-    next: string | null;
     results: T[];
   }
 
@@ -15,7 +13,7 @@ export interface FetchResponse<T> {
 }
 
 const clientInstance = axios.create({
-    baseURL: "https://skillsprint.site/api/",
+    baseURL: "http://localhost:8080/api/",
     headers: {
         "x-auth-token": getToken()
     }
