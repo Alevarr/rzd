@@ -7,7 +7,7 @@ export interface FetchResponse<T> {
 
   const getToken = () => {
     const cookies = new Cookies();
-    const token = cookies.get("skillsprint_auth_token")
+    const token = cookies.get("rzd_auth_token")
     return token;
 
 }
@@ -26,6 +26,7 @@ class ApiClient<T> {
     }
     getAll = (config?: AxiosRequestConfig) => clientInstance.get<FetchResponse<T>>(this.endpoint, config).then(res => res.data);
     getSingle = (config?: AxiosRequestConfig) => clientInstance.get<T>(this.endpoint, config).then(res => res.data);
+    putSingle = (config?: AxiosRequestConfig) => clientInstance.post<T>(this.endpoint, config).then(res => res.data);
     post = (config?: AxiosRequestConfig) => clientInstance.post<T>(this.endpoint, config).then(res => res.data);
     postSingle = (config?: AxiosRequestConfig) => clientInstance.post<T>(this.endpoint, config).then(res => res.data);
     static signUpUser = (config?: AxiosRequestConfig) => clientInstance.post<{"x-auth-token": string}>("/users", config);

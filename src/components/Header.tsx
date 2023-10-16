@@ -47,14 +47,17 @@ export default function ({ token }: Props) {
                 variant="ghost"
                 leftIcon={<RiLoginBoxLine size="16px" />}
                 onClick={() => navigate("/login")}
+                borderRadius={0}
               >
                 Войти
               </Button>
             </>
           ) : (
             <IconButton
-              icon={<CgProfile />}
+              icon={<CgProfile size="24px" />}
+              borderRadius={0}
               aria-label="Profile"
+              bg="white"
               onClick={() => navigate("/me")}
             />
           )}

@@ -25,7 +25,6 @@ export default ({ route }: Props) => {
   const navigate = useNavigate();
   const departureDate = new Date(route.departureDate * 1000);
   const arrivalDate = new Date(route.arrivalDate * 1000);
-  console.log(departureDate);
   return (
     <Card
       width="100%"
