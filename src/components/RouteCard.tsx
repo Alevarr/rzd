@@ -181,34 +181,50 @@ export default ({ route }: Props) => {
                   Купе
                 </Text>
                 <Text as="span" width="50px" textAlign="end" color="gray">
-                  199
+                  {route.arrivalStation == "Казань Пасс"
+                    ? 192
+                    : route.arrivalStation == "Мурманск"
+                    ? 128
+                    : 128}
                 </Text>
                 <Text as="span" width="100px" textAlign="end" color="red">
-                  от 2890 ₽
+                  от{" "}
+                  {route.arrivalStation == "Казань Пасс"
+                    ? "3 377"
+                    : route.arrivalStation == "Мурманск"
+                    ? "6 325"
+                    : "4 731"}
+                  ₽
                 </Text>
               </HStack>
-              <HStack fontSize="14px">
-                <Text as="span" flexGrow={1}>
-                  СВ
-                </Text>
-                <Text as="span" width="50px" textAlign="end" color="gray">
-                  32
-                </Text>
-                <Text as="span" width="100px" textAlign="end" color="red">
-                  от 9902 ₽
-                </Text>
-              </HStack>
-              <HStack fontSize="14px">
-                <Text as="span" flexGrow={1}>
-                  Купе(для инвалидов)
-                </Text>
-                <Text as="span" width="50px" textAlign="end" color="gray">
-                  2
-                </Text>
-                <Text as="span" width="100px" textAlign="end" color="red">
-                  от 2049 ₽
-                </Text>
-              </HStack>
+              {route.arrivalStation != "Нижний Новгород Московский" && (
+                <HStack fontSize="14px">
+                  <Text as="span" flexGrow={1}>
+                    СВ
+                  </Text>
+                  <Text as="span" width="50px" textAlign="end" color="gray">
+                    {route.arrivalStation == "Казань Пасс" ? 18 : 18}
+                  </Text>
+                  <Text as="span" width="100px" textAlign="end" color="red">
+                    от{" "}
+                    {route.arrivalStation == "Казань Пасс" ? "9 901" : "20 958"}{" "}
+                    ₽
+                  </Text>
+                </HStack>
+              )}
+              {route.arrivalStation != "Казань Пасс" && (
+                <HStack fontSize="14px">
+                  <Text as="span" flexGrow={1}>
+                    Плацкарт
+                  </Text>
+                  <Text as="span" width="50px" textAlign="end" color="gray">
+                    {route.arrivalStation == "Мурманск" ? 216 : 270}
+                  </Text>
+                  <Text as="span" width="100px" textAlign="end" color="red">
+                    от {route.arrivalStation == "Мурманск" ? "5 275" : "3 283"}₽
+                  </Text>
+                </HStack>
+              )}
             </VStack>
           </Stack>
         </VStack>

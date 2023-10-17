@@ -1,7 +1,7 @@
-import User from "./User";
+import SeatsPageUser from "./SeatUser";
 
 export default interface Seat {
     price: number,
     isBooked: boolean,
-    userBooked: User | null
+    userBooked: SeatsPageUser | null
 }

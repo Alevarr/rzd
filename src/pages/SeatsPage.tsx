@@ -18,6 +18,7 @@ import SVCart from "../components/SVCart";
 import ApiClient from "../services/api-client";
 
 export default () => {
+  const toast = useToast();
   const token = useOutletContext<[string | null, (token: string) => void]>()[0];
   const navigate = useNavigate();
 
@@ -29,9 +30,8 @@ export default () => {
   if (error) return <ErrorBlock>{error.message}</ErrorBlock>;
   if (!data) return <ErrorBlock>404 Page not found</ErrorBlock>;
 
-  const toast = useToast();
   const apiClient = new ApiClient("/trainRoutes");
-  const sendBuySeat = (carriage: number, seat: number) => {
+  const sendBuySeat = async (carriage: number, seat: number) => {
     apiClient
       .postSingle({
         params: {

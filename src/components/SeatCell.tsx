@@ -10,8 +10,9 @@ import {
   PopoverBody,
   PopoverFooter,
   HStack,
+  Tooltip,
 } from "@chakra-ui/react";
-import User from "../entities/User";
+import SeatsPageUser from "../entities/SeatUser";
 
 interface Props {
   seatNumber: number;
@@ -19,7 +20,7 @@ interface Props {
   price: number;
   buyCallback: (seatIndex: number) => void;
   isBooked: boolean;
-  userBooked: User | null;
+  userBooked: SeatsPageUser | null;
 }
 
 export default ({
@@ -31,18 +32,57 @@ export default ({
   userBooked,
 }: Props) => {
   const index = seatNumber - 1;
+  const optionsMap: { [key: string]: string } = {
+    activeLifeStyle: "Активный образ жизни",
+    arts: "Искусство",
+    cars: "Автомобили",
+    gardening: "Садоводство",
+    midAge: "Попутчики схожего возраста",
+    noChildren: "Без детей",
+    oldAge: "Попутчики схожего возраста",
+    read: "Книги",
+    silence: "Тишина",
+    sleep: "Сон",
+    sports: "Спорт",
+    travel: "Путешествия",
+    uncommunicative: "Неразговорчивость",
+    withFriends: "С друзьями",
+    work: "Работа в пути",
+    youngAge: "Попутчики схожего возраста",
+  };
+  let tooltipString = "";
+  if (userBooked) {
+    for (const [key, value] of Object.entries(userBooked.options)) {
+      if (value === true) tooltipString += optionsMap[key] + ", ";
+    }
+  }
+
   return (
     <Popover>
       <PopoverTrigger>
-        <Button
-          borderRadius={0}
-          colorScheme="red"
-          w="40px"
-          h="40px"
-          isDisabled={isBooked}
-        >
-          {seatNumber}
-        </Button>
+        {isBooked ? (
+          <Tooltip label={tooltipString}>
+            <Button
+              borderRadius={0}
+              colorScheme="red"
+              w="40px"
+              h="40px"
+              isDisabled={isBooked}
+            >
+              {seatNumber}
+            </Button>
+          </Tooltip>
+        ) : (
+          <Button
+            borderRadius={0}
+            colorScheme="red"
+            w="40px"
+            h="40px"
+            isDisabled={isBooked}
+          >
+            {seatNumber}
+          </Button>
+        )}
       </PopoverTrigger>
       <PopoverContent bg="gray.700" color="white">
         <PopoverHeader fontWeight="bold" border={0}>
