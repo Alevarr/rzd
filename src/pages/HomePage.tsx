@@ -7,7 +7,7 @@ export default () => {
   return (
     <VStack mt="46px" p={8} spacing={4}>
       {data?.results.map((route) => (
-        <RouteCard route={route} />
+        <RouteCard route={route} key={route.trainName} />
       ))}
     </VStack>
   );
