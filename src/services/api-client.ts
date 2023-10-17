@@ -13,7 +13,7 @@ export interface FetchResponse<T> {
 }
 
 const clientInstance = axios.create({
-    baseURL: "http://localhost:8080/api/",
+    baseURL: "https://skillsprint.site/api/",
     headers: {
         "x-auth-token": getToken()
     }

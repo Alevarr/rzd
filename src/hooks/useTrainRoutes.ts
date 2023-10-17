@@ -10,7 +10,7 @@ const useTrainRoutes = () => {
   return useQuery<FetchResponse<TrainRoute>, Error>({
     queryKey: ["trainRoutes"],
     queryFn: () => apiClient.getAll(),
-    staleTime: toMs("30s")
+    staleTime: toMs("10s")
 })}
 
 export default useTrainRoutes;

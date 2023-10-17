@@ -10,7 +10,7 @@ const useTrainRoute = (id : string) => {
   return useQuery<TrainRoute, Error>({
     queryKey: ["trainRoute", id],
     queryFn: () => apiClient.getSingle(),
-    staleTime: toMs("30s")
+    staleTime: toMs("10s")
 })}
 
 export default useTrainRoute;

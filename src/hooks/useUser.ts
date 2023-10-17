@@ -8,5 +8,5 @@ export default () => {
     return useQuery<User, Error>({
       queryKey: ["user"],
       queryFn: () => apiClient.getSingle(),
-      staleTime: toMs("30s")
+      staleTime: toMs("10s")
     })}
