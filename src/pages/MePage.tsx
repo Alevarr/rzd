@@ -16,6 +16,7 @@ import ErrorBlock from "../components/ErrorBlock";
 import Option from "../entities/Option";
 import { FieldValues, useForm } from "react-hook-form";
 import User from "../entities/User";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default () => {
   const toast = useToast();
@@ -23,6 +24,11 @@ export default () => {
   const options = data?.options;
   const age = data?.age;
   let checkSameAge = false;
+
+  const setToken =
+    useOutletContext<[string | null, (token: string | null) => void]>()[1];
+
+  const navigate = useNavigate();
 
   if (options) {
     if (
@@ -126,6 +132,17 @@ export default () => {
               </FormControl>
               <Button colorScheme="red" type="submit" mt={4} borderRadius={0}>
                 Сохранить
+              </Button>
+              <Button
+                colorScheme="red"
+                variant="ghost"
+                onClick={() => {
+                  setToken(null);
+                  navigate("/");
+                  window.location.reload();
+                }}
+              >
+                Выйти из аккаунта
               </Button>
             </Stack>
           </form>

@@ -6,11 +6,10 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Text,
   useToast,
 } from "@chakra-ui/react";
 import "./seatsPage.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import useTrainRoute from "../hooks/useTrainRoute";
 import ErrorBlock from "../components/ErrorBlock";
 import KupeCart from "../components/KupeCart";
@@ -19,6 +18,11 @@ import SVCart from "../components/SVCart";
 import ApiClient from "../services/api-client";
 
 export default () => {
+  const token = useOutletContext<[string | null, (token: string) => void]>()[0];
+  const navigate = useNavigate();
+
+  if (!token) navigate("/login");
+
   const { id } = useParams();
   const { data, error, isLoading } = useTrainRoute(id as string);
   if (isLoading) return <Spinner m={8} />;
