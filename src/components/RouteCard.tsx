@@ -25,9 +25,11 @@ export default ({ route }: Props) => {
   const navigate = useNavigate();
   const departureDate = new Date(route.departureDate * 1000);
   const arrivalDate = new Date(route.arrivalDate * 1000);
+  const daysMap = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
   return (
     <Card
       width="100%"
+      maxW="800px"
       borderRadius={0}
       _hover={{
         transform: "scale(1.01)",
@@ -73,13 +75,14 @@ export default ({ route }: Props) => {
           >
             <VStack flexGrow={2} alignItems="stretch">
               <HStack justifyContent="space-between">
-                <VStack justifyContent="flex-start">
-                  <Text as="span" fontSize="36px">
+                <VStack justifyContent="center" gap={0} alignItems="flex-start">
+                  <Text as="span" fontSize="12px" color="gray">
                     {departureDate.getDate() +
-                      "." +
-                      departureDate.getMonth() +
-                      " " +
-                      departureDate.getHours() +
+                      "дек., " +
+                      daysMap[departureDate.getDay()]}
+                  </Text>
+                  <Text as="span" fontSize="32px">
+                    {departureDate.getHours() +
                       ":0" +
                       departureDate.getMinutes()}
                   </Text>
@@ -100,25 +103,28 @@ export default ({ route }: Props) => {
                     <Icon as={RiArrowRightSLine} color="red" ml="-8px" />
                   </HStack>
                 </VStack>
-                <VStack justifyContent="flex-start">
-                  <Text as="span" fontSize="36px">
+                <VStack justifyContent="center" gap={0} alignItems="flex-end">
+                  <Text as="span" fontSize="12px" color="gray">
                     {arrivalDate.getDate() +
-                      "." +
-                      arrivalDate.getMonth() +
-                      " " +
-                      arrivalDate.getHours() +
-                      ":" +
-                      arrivalDate.getMinutes()}
+                      "дек., " +
+                      daysMap[arrivalDate.getDay()]}
+                  </Text>
+                  <Text as="span" fontSize="32px">
+                    {arrivalDate.getHours() + ":" + arrivalDate.getMinutes()}
                   </Text>
                   <Stack spacing={0}>
-                    <Text as="span" fontSize="12px"></Text>
-                    <Text as="span" fontSize="12px" fontWeight="bold">
+                    <Text
+                      as="span"
+                      fontSize="12px"
+                      textAlign="right"
+                      fontWeight="bold"
+                    >
                       {route.arrivalStation}
                     </Text>
                   </Stack>
                 </VStack>
               </HStack>
-              <HStack justifyContent="flex-start" spacing={4}>
+              <HStack justifyContent="flex-start" spacing={4} mt={4}>
                 <Icon boxSize="24px">
                   <path
                     xmlns="http://www.w3.org/2000/svg"

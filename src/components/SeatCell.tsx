@@ -55,11 +55,45 @@ export default ({
     for (const [key, value] of Object.entries(userBooked.options)) {
       if (value === true) tooltipString += optionsMap[key] + ", ";
     }
+    tooltipString = tooltipString.slice(0, tooltipString.length - 2);
   }
 
   return (
     <Popover>
       <PopoverTrigger>
+        {/* {isBooked ? (
+          <Tooltip label={tooltipString}>
+            <Button
+              borderRadius={0}
+              colorScheme="red"
+              w="40px"
+              h="40px"
+              isDisabled={isBooked}
+            >
+              {seatNumber}
+            </Button>
+          </Tooltip>
+        ) : ![3, 4].includes(seatNumber) ? (
+          <Button
+            borderRadius={0}
+            colorScheme="red"
+            w="40px"
+            h="40px"
+            isDisabled={isBooked}
+          >
+            {seatNumber}
+          </Button>
+        ) : (
+          <Button
+            borderRadius={0}
+            colorScheme="blue"
+            w="40px"
+            h="40px"
+            isDisabled={isBooked}
+          >
+            {seatNumber}
+          </Button>
+        )} */}
         {isBooked ? (
           <Tooltip label={tooltipString}>
             <Button
@@ -86,7 +120,12 @@ export default ({
       </PopoverTrigger>
       <PopoverContent bg="gray.700" color="white">
         <PopoverHeader fontWeight="bold" border={0}>
-          №{seatNumber} Купе
+          №{seatNumber}{" "}
+          {["2Т", "2Э", "2К"].includes(typeSlug)
+            ? "Купе"
+            : ["3Э", "3Б"].includes(typeSlug)
+            ? "Плацкарт"
+            : "СВ"}
         </PopoverHeader>
         <PopoverArrow bg="gray.700" />
         <PopoverCloseButton />

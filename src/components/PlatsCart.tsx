@@ -2,6 +2,7 @@ import { Grid, GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import Carriage from "../entities/Carriage";
 import { BsDot } from "react-icons/bs";
 import SeatCell from "./SeatCell";
+import Hints from "./Hints";
 
 interface Props {
   carriage: Carriage;
@@ -53,6 +54,8 @@ export default ({ carriage, buyCallback }: Props) => {
         пассажиров меньше, чем мест в купе, укажите в заказе для оставшихся мест
         данные одного из пассажиров повторно.
       </Text>
+      <Hints />
+
       <HStack spacing={0} fontSize="32px" justifyContent="flex-start">
         <Text as="span">Вагон {carriage.number}</Text>
         <BsDot color="red" />
