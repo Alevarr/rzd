@@ -120,7 +120,7 @@ export default () => {
               <FormControl key={"sameAge"}>
                 <HStack justifyContent="space-between">
                   <FormLabel m={0} htmlFor={"sameAge"}>
-                    Предпочту попутчиков своего возраста
+                    Буду рад сверстнику
                   </FormLabel>
                   <Switch
                     {...register("sameAge")}
